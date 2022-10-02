@@ -11,23 +11,6 @@ public class JavaCon {
 
         try {
             connection = DriverManager.getConnection(url, user, password);
-//            Statement stmt = null;
-//            stmt = connection.createStatement();
-//            String sql = "CREATE TABLE question " +
-//                    "(id serial PRIMARY KEY," +
-//                    " question varchar(80), " +
-//                    " topic varchar(80), " +
-//                    " difficulty_level int)";
-//            stmt.executeUpdate(sql);
-//            sql = "CREATE TABLE answers " +
-//                    "(id serial PRIMARY KEY," +
-//                    " question_Id int," +
-//                    " answer varchar(80)," +
-//                    " is_correct boolean)";
-//            stmt.executeUpdate(sql);
-//            stmt.close();
-//            connection.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

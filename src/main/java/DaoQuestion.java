@@ -44,7 +44,7 @@ public class DaoQuestion {
     }
 
     /*
-        This method helps method addQuestion() to save answers to each question.
+        This method helps addQuestion() method to save answers to each question.
      */
     private void addAnswer(int questionNumber, List<Answer> answerList) {
 
@@ -76,7 +76,9 @@ public class DaoQuestion {
         }
     }
 
-
+    /*
+        This method returns questions by topic
+     */
     public List<Question> getQuestionByTopic(String topic) {
         List<Question> questionList = new ArrayList<>();
         Question question;
@@ -84,9 +86,9 @@ public class DaoQuestion {
 
         try {
 
-            PreparedStatement preparedStatement = JavaCon.connection.prepareStatement(query);
-            preparedStatement.setString(1, topic);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            PreparedStatement statement = JavaCon.connection.prepareStatement(query);
+            statement.setString(1, topic);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 question = new Question();
@@ -104,14 +106,17 @@ public class DaoQuestion {
         return questionList;
     }
 
+    /*
+        This method returns Answers to the requested questions
+     */
     public List<Answer> questionAnswers(int questionId) {
 
         List<Answer> answerList = new ArrayList<>();
         String query = "select * from answers where question_id = ?";
         try {
-            PreparedStatement preparedStatement = JavaCon.connection.prepareStatement(query);
-            preparedStatement.setInt(1, questionId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            PreparedStatement statement = JavaCon.connection.prepareStatement(query);
+            statement.setInt(1, questionId);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 answerList.add(new Answer(resultSet.getString(3), resultSet.getBoolean(4)));
@@ -120,6 +125,63 @@ public class DaoQuestion {
             e.printStackTrace();
         }
         return answerList;
+    }
+
+    /*
+        Deletes question by its id, also calls deleteAnswers() method to
+        delete answers associated with this question
+     */
+    public void deleteQuestion(int questionId) {
+
+        String query = "DELETE FROM question where id = ?";
+
+        try {
+            PreparedStatement statement = JavaCon.connection.prepareStatement(query);
+            statement.setInt(1, questionId);
+            statement.executeUpdate();
+            deleteAnswers(questionId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+        Help deleteQuestion() method to delete all associated answers with the given question
+     */
+    private void deleteAnswers(int questionId) {
+
+        String query = "DELETE FROM answers where question_id = ?";
+        try {
+            PreparedStatement statement = JavaCon.connection.prepareStatement(query);
+            statement.setInt(1, questionId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+        This method updates question and answers to it.
+     */
+    public void updateQuestion(int questionId, Question question) {
+        String query = "UPDATE question set question = ?, topic = ?, difficulty_level = ? WHERE id = ?";
+        System.out.println(query);
+        try {
+            PreparedStatement statement = JavaCon.connection.prepareStatement(query);
+            statement.setString(1, question.getQuestion());
+            statement.setString(2,question.getTopic());
+            statement.setInt(3, question.getDifficultyLevel());
+            statement.setInt(4, questionId);
+            statement.executeUpdate();
+            deleteAnswers(questionId);
+            addAnswer(questionId, question.getAnswers());
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

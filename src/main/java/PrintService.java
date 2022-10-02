@@ -1,5 +1,9 @@
 import java.util.List;
 
+/*
+    This class allows to print out questions by topic;
+ */
+
 public class PrintService {
 
     DaoQuestion daoQuestion = new DaoQuestion();
@@ -9,7 +13,7 @@ public class PrintService {
         List<Question> questionList = daoQuestion.getQuestionByTopic(questionTopic);
 
         for (Question question : questionList) {
-            System.out.println(question.getQuestion()+ " Topic of this question is: " +
+            System.out.println("Question id: " + question.getId() + " " + question.getQuestion()+ " Topic of this question is: " +
                     question.getTopic() + ". Difficulty of this question is: " + question.getDifficultyLevel() + ".");
         }
     }
@@ -19,7 +23,7 @@ public class PrintService {
         List<Question> questionList = daoQuestion.getQuestionByTopic(questionTopic);
 
         for (Question question : questionList) {
-            System.out.println(question.getQuestion()+ " Topic of this question is: " +
+            System.out.println("Question id: " + question.getId() + " " + question.getQuestion()+ " Topic of this question is: " +
                     question.getTopic() + ". Difficulty of this question is: " + question.getDifficultyLevel() + ".");
 
             int answerNumber = 1;
