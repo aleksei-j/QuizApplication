@@ -38,6 +38,7 @@ public class DaoQuestion {
             addAnswer(questionId, q.getAnswers());
             statement.close();
 
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,7 +80,7 @@ public class DaoQuestion {
     /*
         This method returns questions by topic
      */
-    public List<Question> getQuestionByTopic(String topic) {
+    public List<Question> getQuestionsByTopic(String topic) {
         List<Question> questionList = new ArrayList<>();
         Question question;
         String query = "select * from question where topic = ?";
@@ -104,6 +105,34 @@ public class DaoQuestion {
         }
 
         return questionList;
+    }
+
+    public Question getQuestionById(int id) {
+        Question question = new Question();
+        String query = "select * from question where id = ?";
+
+        try {
+
+            PreparedStatement statement = JavaCon.connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                question.setId(id);
+                question.setQuestion(resultSet.getString(2));
+                question.setTopic(resultSet.getString(3));
+                question.setDifficultyLevel(resultSet.getInt(4));
+                question.setAnswers(questionAnswers(resultSet.getInt(1)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (question.getId() == 0) {
+            return null;
+        }
+
+        System.out.println(question);
+        return question;
     }
 
     /*
@@ -167,7 +196,6 @@ public class DaoQuestion {
      */
     public void updateQuestion(int questionId, Question question) {
         String query = "UPDATE question set question = ?, topic = ?, difficulty_level = ? WHERE id = ?";
-        System.out.println(query);
         try {
             PreparedStatement statement = JavaCon.connection.prepareStatement(query);
             statement.setString(1, question.getQuestion());
@@ -178,7 +206,6 @@ public class DaoQuestion {
             deleteAnswers(questionId);
             addAnswer(questionId, question.getAnswers());
             statement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -10,7 +10,7 @@ public class PrintService {
 
     public void printQuestionByTopic(String questionTopic) {
 
-        List<Question> questionList = daoQuestion.getQuestionByTopic(questionTopic);
+        List<Question> questionList = daoQuestion.getQuestionsByTopic(questionTopic);
 
         for (Question question : questionList) {
             System.out.println("Question id: " + question.getId() + " " + question.getQuestion()+ " Topic of this question is: " +
@@ -20,7 +20,7 @@ public class PrintService {
 
     public void printQuestionAndAnswer(String questionTopic) {
 
-        List<Question> questionList = daoQuestion.getQuestionByTopic(questionTopic);
+        List<Question> questionList = daoQuestion.getQuestionsByTopic(questionTopic);
 
         for (Question question : questionList) {
             System.out.println("Question id: " + question.getId() + " " + question.getQuestion()+ " Topic of this question is: " +

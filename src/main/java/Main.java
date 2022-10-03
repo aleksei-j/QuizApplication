@@ -10,10 +10,9 @@ public class Main {
         PrintService printService = new PrintService();
         JavaCon.connection();
 
-//        printService.printQuestionByTopic("Geography");
 
-        printService.printQuestionAndAnswer("Geography");
-
+        Question question = daoQuestion.getQuestionById(1);
+        System.out.println(question.getQuestion());
 
         JavaCon.connection.close();
     }
