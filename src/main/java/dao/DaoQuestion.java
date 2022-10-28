@@ -1,3 +1,9 @@
+package dao;
+
+import connection.JavaCon;
+import model.Answer;
+import model.Question;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +27,7 @@ public class DaoQuestion {
             statement.setString(2,q.getTopic());
             statement.setInt(3, q.getDifficultyLevel());
             int affectedRows = statement.executeUpdate();
-            System.out.println("Question successfully inserted");
+            System.out.println("model.Question successfully inserted");
 
             if (affectedRows == 0) {
                 throw new SQLException("Creating field failed, no rows affected.");
@@ -67,10 +73,7 @@ public class DaoQuestion {
                         throw  new SQLException("Creating question failed, no ID obtained.");
                     }
                 }
-                System.out.println("Answer successfully inserted");
-                if (affectedRows == 0) {
-                    throw new SQLException("Creating field failed, no rows affected.");
-                }
+                System.out.println("model.Answer successfully inserted");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
