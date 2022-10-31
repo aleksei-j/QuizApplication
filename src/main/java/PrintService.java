@@ -1,3 +1,7 @@
+import dao.DaoQuestion;
+import model.Answer;
+import model.Question;
+
 import java.util.List;
 
 /*
@@ -5,26 +9,17 @@ import java.util.List;
  */
 
 public class PrintService {
-
-    DaoQuestion daoQuestion = new DaoQuestion();
+    final DaoQuestion daoQuestion = new DaoQuestion();
 
     public void printQuestionByTopic(String questionTopic) {
-
         List<Question> questionList = daoQuestion.getQuestionsByTopic(questionTopic);
-
-        for (Question question : questionList) {
-            System.out.println("Question id: " + question.getId() + " " + question.getQuestion()+ " Topic of this question is: " +
-                    question.getTopic() + ". Difficulty of this question is: " + question.getDifficultyLevel() + ".");
-        }
+        System.out.println(questionList);
     }
 
     public void printQuestionAndAnswer(String questionTopic) {
-
         List<Question> questionList = daoQuestion.getQuestionsByTopic(questionTopic);
-
         for (Question question : questionList) {
-            System.out.println("Question id: " + question.getId() + " " + question.getQuestion()+ " Topic of this question is: " +
-                    question.getTopic() + ". Difficulty of this question is: " + question.getDifficultyLevel() + ".");
+            System.out.println(question);
 
             int answerNumber = 1;
             for (Answer answer : question.getAnswers()) {

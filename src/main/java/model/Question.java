@@ -1,4 +1,7 @@
+package model;
+
 import java.util.List;
+import java.util.Objects;
 
 public class Question {
 
@@ -65,5 +68,24 @@ public class Question {
 
     public void setDifficultyLevel(int difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "model.Question id: " + this.getId() + " " + this.getQuestion()+ " Topic of this question is: " +
+                this.getTopic() + ". Difficulty of this question is: " + this.getDifficultyLevel() + ".";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question1 = (Question) o;
+        return getId() == question1.getId() && getDifficultyLevel() == question1.getDifficultyLevel() && getQuestion().equals(question1.getQuestion()) && getTopic().equals(question1.getTopic()) && getAnswers().equals(question1.getAnswers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getQuestion(), getTopic(), getDifficultyLevel(), getAnswers());
     }
 }

@@ -1,12 +1,11 @@
+package model;
+
 public class Answer {
 
     private int id;
     private int questionId;
     private String answer;
     private boolean isCorrect;
-
-    public Answer() {
-    }
 
     public Answer(String answer, boolean isCorrect) {
         this.answer = answer;
